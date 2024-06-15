@@ -1,0 +1,17 @@
+
+@font-face {
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/LexendDeca.ttf');
+}
+
+@font-face {
+  font-family: 'Lexend Deca Bold';
+  font-weight: 700;
+  src: url('./assets/LexendDecaBold.ttf');
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
