@@ -15,3 +15,59 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Tailwind CSS custom styles */
+.custom-dropdown .ant-select-item-option-content {
+  color: #CF9FFF;
+  font-size: 18px;
+
+}
+
+
+.custom-dropdown .ant-select-dropdown{
+  background-color: green !important;
+}
+
+
+.custom-dropdown .ant-select-item-option {
+  background-color: #FBF7FF !important;
+  border: #CF9FFF 2px solid;
+  margin-bottom: 4px;
+}
+
+.custom-dropdown .ant-select-item-option-active,
+.custom-dropdown .ant-select-item-option-selected {
+  background-color: #D4BAF3 !important;
+  color: white !important;
+  
+}
+
+.ant-select-selector {
+  
+  padding-bottom: 10px !important;
+  font-size: 30px !important;
+  color: #D4BAF3 !important;
+  background-color: transparent !important;
+  appearance: none !important;
+  height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  border: none !important;
+  margin-bottom: 2px !important;
+  box-shadow: none !important; 
+  
+}
+
+.ant-select-selector:focus, 
+.ant-select-selector:active, 
+.ant-select-selector:focus-visible {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important; /* Ensure no shadow on focus/active */
+}
+.custom-select-placeholder .ant-select-selection-placeholder {
+  color: #D4BAF3 !important; 
+}
+.ant-select-arrow {
+  color: #D4BAF3 !important;
+}
