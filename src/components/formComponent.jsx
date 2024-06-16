@@ -7,10 +7,75 @@ import q7Banner from '../assets/q7Banner.png'
 
 export default function FormComponent({setThankU}) {
 
+  //State for selecting country code
   const [selected, setSelected] = useState("")
 
+  //Form data states
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [country, setCountry] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState()
+  const [countryCode, setCountryCode] = useState()
+  const [progLangState, setProgLang] = useState([])
+  const [exp, setExp] = useState('')
+  const [salary, setSalary] = useState('')
+  const [linkedInLink, setLinkedInLink] = useState('')
+
+
+  //Form data handling methods
+  const handleFirstName = (e) => {
+    setFirstName(e.target.value);
+  }
+  
+  const handleLastName = (e) => {
+    setLastName(e.target.value);
+  }
+  
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  }
+  
+  const handleCountry = (e) => {
+    setCountry(e.target.value);
+  }
+  
+  const handlePhoneNumber = (e) => {
+    setPhoneNumber(e.target.value);
+  }
+  
+  const handleCountryCode = (e) => {
+    setCountryCode(e.target.value)
+  }
+  
+  const handleExp = (item) => {
+    setExp(item.value);
+  }
+  
+  const handleSalary = (item) => {
+
+    setSalary(item.value);
+  }
+  
+
+  const handleLinkedInLink = (e) => {
+    setLinkedInLink(e.target.value);
+  }
+
+  const handleProgLangClick = (item) => {
+    setProgLang((prevLangs) => {
+      if (!prevLangs.some(lang => lang.index === item.index)) {
+        return [...prevLangs, item];
+      }
+      return prevLangs;
+    });
+  };
+
+
+
+  //scroll on btn press behavior
   const sectionRefs = useRef([])
-  sectionRefs.current = [useRef(null), useRef(null), useRef(null)]
+  sectionRefs.current = [useRef(null), useRef(null), useRef(null),useRef(null), useRef(null), useRef(null),useRef(null), useRef(null), useRef(null)]
 
   const currentSectionIndex = useRef(0)
 
@@ -31,6 +96,33 @@ export default function FormComponent({setThankU}) {
 
   const handleSubmission = async(e) => {
     e.preventDefault()
+
+    const payload = {
+      firstName : firstName,
+      lastName : lastName,
+      email : email,
+      country : country,
+      phoneNumber : countryCode + phoneNumber,
+      progLangs : progLangState,
+      exp : exp,
+      salary : salary,
+      linkedInLink : linkedInLink
+    }
+    
+    //Api is empty no API url has been provided
+    await fetch('',{
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }).then(res => {
+
+    }).catch(error => {
+      console.log(error)
+    })
+    
+  
   }
 
   const handleThankU = () => {
@@ -558,11 +650,11 @@ export default function FormComponent({setThankU}) {
                 <div className=' w-full flex flex-col mt-8'>
                   <span className=' w-full flex flex-col text-[#CF9FFF] mb-12'>
                     <label className=' text-base'>First name</label>
-                    <input type='text' placeholder='Jane' className='focus:outline-0 text-3xl pb-2 appearance-none  w-full border-b-2 border-[#CF9FFF] placeholder:text-[#F1E2FF]' />
+                    <input onChange={handleFirstName} type='text' placeholder='Jane' className='focus:outline-0 text-2xl pb-2 appearance-none  w-full border-b-2 border-[#CF9FFF] placeholder:text-[#F1E2FF]' />
                   </span>
                   <span className=' w-full flex flex-col text-[#CF9FFF] mb-12'>
                     <label className=' text-base'>Last name</label>
-                    <input type='text' placeholder='Jane' className=' focus:outline-0  appearance-none  w-full border-b-2 border-[#CF9FFF] placeholder:text-[#F1E2FF]' />
+                    <input  onChange={handleLastName} type='text' placeholder='Jane' className=' focus:outline-0 text-2xl pb-2 appearance-none  w-full border-b-2 border-[#CF9FFF] placeholder:text-[#F1E2FF]' />
                   </span>
                 </div>
                 <div className=' flex '>
@@ -593,7 +685,7 @@ export default function FormComponent({setThankU}) {
                 <p className=' font-lexend-deca text-[#5E5F70] mt-3 text-xl'>This is how we'll contact you.</p>
                 <div className=' w-full flex flex-col mt-8'>
                   <span className=' w-full flex flex-col text-[#CF9FFF] mb-4'>
-                    <input type='email' placeholder='name@example.com' className='focus:outline-0 text-3xl pb-2 appearance-none  w-full border-b-2 border-[#CF9FFF] placeholder:text-[#F1E2FF]' />
+                    <input  onChange={handleEmail} type='email' placeholder='name@example.com' className='focus:outline-0 text-3xl pb-2 appearance-none  w-full border-b-2 border-[#CF9FFF] placeholder:text-[#F1E2FF]' />
                   </span>
 
                 </div>
@@ -641,7 +733,7 @@ export default function FormComponent({setThankU}) {
                     >
 
                       {countryList.map((country, index) => (
-                        <Option key={index} value={country}>
+                        <Option key={index} value={country}  onChange={handleCountry}>
                           {country}
                         </Option>
                       ))}
@@ -688,9 +780,9 @@ export default function FormComponent({setThankU}) {
                       showSecondarySelectedLabel={false}
                       className=' mr-2'
                       fullWidth={false}
-
+                      onChange={handleCountryCode}
                     />
-                    <input type='number' placeholder='0551 23 45 67' className='focus:outline-0 text-3xl pb-2 appearance-none  w-full border-b-2 border-[#CF9FFF] placeholder:text-[#F1E2FF]' />
+                    <input  onChange={handlePhoneNumber} type='number' placeholder='0551 23 45 67' className='focus:outline-0 text-3xl pb-2 appearance-none  w-full border-b-2 border-[#CF9FFF] placeholder:text-[#F1E2FF]' />
                   </span>
 
                 </div>
@@ -722,9 +814,9 @@ export default function FormComponent({setThankU}) {
                 <p className=' font-lexend-deca text-[#5E5F70] mt-3 text-xl'>Select all the languages you know.</p>
                 <p className=' font-lexend-deca text-[#CF9FFF] text-sm  mt-8 mb-2'>Choose as many as you like</p>
                 <div className=' w-full flex flex-col'>
-                  <div className=' flex  flex-wrap w-full h-fit'>
+                  <div  className=' flex  flex-wrap w-full h-fit'>
                     {progLangs.map((item) => (
-                      <div className=' cursor-pointer rounded-lg w-[32%] mb-2 mr-2 p-2 font-lexend-deca text-[#CF9FFF] border-[#CF9FFF] border-2 flex bg-[#FAF5FF] hover:bg-[#E7CFFF] items-center'>
+                      <div key={item.index} onClick={() => handleProgLangClick(item)} className=' cursor-pointer rounded-lg w-[32%] mb-2 mr-2 p-2 font-lexend-deca text-[#CF9FFF] border-[#CF9FFF] border-2 flex bg-[#FAF5FF] hover:bg-[#E7CFFF] items-center'>
                         <div className=' bg-white px-2 border-2 mr-2 border-[#CF9FFF] rounded-md'>{item.index}</div>
                         <div >{item.value}</div>
                       </div>
@@ -745,7 +837,7 @@ export default function FormComponent({setThankU}) {
 
           </div>
         </section>
-        <section id='q6' ref={sectionRefs.current[4]} className=' snap-start w-screen h-screen flex justify-center items-center'>
+        <section id='q6' ref={sectionRefs.current[5]} className=' snap-start w-screen h-screen flex justify-center items-center'>
           <div className='flex text-black  h-full  items-center w-1/2'>
             <div className='flex w-full'>
               <div className='flex text-[#CF9FFF] items-start '>
@@ -762,7 +854,7 @@ export default function FormComponent({setThankU}) {
                 <div className=' w-full flex mt-8 flex-col'>
                   <div className=' flex flex-col w-full h-fit'>
                     {experienceLevel.map((item) => (
-                      <div className=' cursor-pointer rounded-lg w-full mb-2  p-2 font-lexend-deca text-[#CF9FFF] border-[#CF9FFF] border-2 flex bg-[#FAF5FF] hover:bg-[#E7CFFF] items-center'>
+                      <div  onClick={() => handleExp(item)} className=' cursor-pointer rounded-lg w-full mb-2  p-2 font-lexend-deca text-[#CF9FFF] border-[#CF9FFF] border-2 flex bg-[#FAF5FF] hover:bg-[#E7CFFF] items-center'>
                         <div className=' bg-white px-2 border-2 mr-2 border-[#CF9FFF] rounded-md'>{item.index}</div>
                         <div >{item.value}</div>
                       </div>
@@ -783,7 +875,7 @@ export default function FormComponent({setThankU}) {
 
           </div>
         </section>
-        <section id='q7' ref={sectionRefs.current[4]} className=' snap-start w-screen h-screen flex justify-center items-center'>
+        <section id='q7' ref={sectionRefs.current[6]} className=' snap-start w-screen h-screen flex justify-center items-center'>
           <div className='flex text-black  h-full  items-center w-full'>
             <div className='flex w-1/2 pl-8'>
               <div className='flex text-[#CF9FFF] items-start '>
@@ -800,7 +892,7 @@ export default function FormComponent({setThankU}) {
                 <div className=' w-full flex mt-8 flex-col'>
                   <div className=' flex flex-col w-full h-fit'>
                     {salaryList.map((item) => (
-                      <div className=' cursor-pointer rounded-lg w-1/2 mb-2  p-2 font-lexend-deca text-[#CF9FFF] border-[#CF9FFF] border-2 flex bg-[#FAF5FF] hover:bg-[#E7CFFF] items-center'>
+                      <div onClick={() => handleSalary(item)} className=' cursor-pointer rounded-lg w-1/2 mb-2  p-2 font-lexend-deca text-[#CF9FFF] border-[#CF9FFF] border-2 flex bg-[#FAF5FF] hover:bg-[#E7CFFF] items-center'>
                         <div className=' bg-white px-2 border-2 mr-2 border-[#CF9FFF] rounded-md'>{item.index}</div>
                         <div >{item.value}</div>
                       </div>
@@ -824,7 +916,7 @@ export default function FormComponent({setThankU}) {
 
           </div>
         </section>
-        <section id='q8' ref={sectionRefs.current[4]} className=' snap-start w-screen h-screen flex justify-center items-center'>
+        <section id='q8' ref={sectionRefs.current[7]} className=' snap-start w-screen h-screen flex justify-center items-center'>
           <div className='flex text-black  h-full  items-center w-1/2'>
             <div className='flex w-full'>
               <div className='flex text-[#CF9FFF] items-start '>
@@ -862,7 +954,7 @@ export default function FormComponent({setThankU}) {
 
           </div>
         </section>
-        <section id='q9' ref={sectionRefs.current[1]} className=' snap-start w-screen h-screen flex justify-center items-center'>
+        <section id='q9' ref={sectionRefs.current[8]} className=' snap-start w-screen h-screen flex justify-center items-center'>
           <div className='flex text-black  h-full  items-center w-1/2'>
             <div className='flex w-full'>
               <div className='flex text-[#CF9FFF] items-start '>
@@ -878,7 +970,7 @@ export default function FormComponent({setThankU}) {
                 <p className=' font-lexend-deca text-[#5E5F70] mt-3 text-xl'>Here's a sniper link to make your life easy - <a href='https://www.linkedin.com/in/me/' className=' underline'>linkedin.com</a> (It'll open in a new tab) 🚀</p>
                 <div className=' w-full flex flex-col mt-8'>
                   <span className=' w-full flex flex-col text-[#CF9FFF] mb-4'>
-                    <input type='text' placeholder='Type your answer here...' className='focus:outline-0 text-3xl pb-2 appearance-none  w-full border-b-2 border-[#CF9FFF] placeholder:text-[#F1E2FF]' />
+                    <input onChange={handleLinkedInLink} type='text' placeholder='Type your answer here...' className='focus:outline-0 text-3xl pb-2 appearance-none  w-full border-b-2 border-[#CF9FFF] placeholder:text-[#F1E2FF]' />
                   </span>
 
                 </div>
